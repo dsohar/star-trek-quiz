@@ -1,5 +1,8 @@
 # Star Trek Quiz
 
+Docker image:
+`dsohar/star-trek-quiz:latest`
+
 ## Overview
 
 Star Trek Quiz is a simple Python web application built with Flask.

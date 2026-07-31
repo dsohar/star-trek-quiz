@@ -1,7 +1,7 @@
-# Star Trek Quiz
+# 🖖 Star Trek Quiz
 
-Docker image:
-`dsohar/star-trek-quiz:latest`
+- 🐳 **[Docker Hub](https://hub.docker.com/r/dsohar/star-trek-quiz)**
+- 💻 **[GitHub Repository](https://github.com/dsohar/star-trek-quiz)**
 
 ## Overview
 

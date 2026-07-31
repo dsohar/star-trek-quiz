@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #101522;
+            color: white;
+            text-align: center;
+        }
+
+        .result-box {
+            background-color: #1e2940;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        a {
+            color: #8fcfff;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="result-box">
+        {% if is_correct %}
+            <h1>✅ Correct!</h1>
+            <!-- <p>You earned {{ points }} points.</p> -->
+        {% else %}
+            <h1>❌ Incorrect</h1>
+            <p>
+                The correct answer was:
+                <strong>{{ correct_answer }}</strong>
+            </p>
+        {% endif %}
+
+        <p>
+            <a href="/">Answer another question</a>
+        </p>
+    </div>
+</body>
+</html>

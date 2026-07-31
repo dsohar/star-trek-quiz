@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Trek Quiz</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #101522;
+            color: white;
+            text-align: center;
+        }
+
+        .quiz-box {
+            background-color: #1e2940;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        button {
+            width: 80%;
+            padding: 12px;
+            margin: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-box">
+        <h1>🖖 Star Trek Quiz</h1>
+
+        <h2>{{ question["text"] }}</h2>
+
+        <!-- <p>
+            This question is worth {{ question["points"] }} points.
+        </p> -->
+
+        <form method="POST" action="/answer">
+            <input
+                type="hidden"
+                name="correct_answer"
+                value="{{ question['correct'][0] }}"
+            >
+
+            <input
+                type="hidden"
+                name="points"
+                value="{{ question['points'] }}"
+            >
+
+            {% for answer in answers %}
+                <button
+                    type="submit"
+                    name="answer"
+                    value="{{ answer }}"
+                >
+                    {{ answer }}
+                </button>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>

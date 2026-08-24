@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz Result</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <style>
         body {
@@ -32,7 +33,7 @@
     <div class="result-box">
         {% if is_correct %}
             <h1>✅ Correct!</h1>
-            <!-- <p>You earned {{ points }} points.</p> -->
+            <p>You earned {{ points }} points.</p>
         {% else %}
             <h1>❌ Incorrect</h1>
             <p>
@@ -41,9 +42,17 @@
             </p>
         {% endif %}
 
-        <p>
-            <a href="/">Answer another question</a>
-        </p>
+        <p>Current score: {{ score }} / 20</p>
+
+        {% if quiz_finished %}
+            <p>
+                <a href="/finish">See final score</a>
+            </p>
+        {% else %}
+            <p>
+                <a href="/quiz">Next question</a>
+            </p>
+        {% endif %}
     </div>
 </body>
 </html>

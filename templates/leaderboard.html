@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #101522;
+            color: white;
+            text-align: center;
+        }
+
+        .leaderboard-box {
+            background-color: #1e2940;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #59677f;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            color: #8fcfff;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="leaderboard-box">
+        <h1>🏆 Leaderboard</h1>
+
+        {% if leaderboard %}
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                </tr>
+
+                {% for entry in leaderboard %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ entry["name"] }}</td>
+                        <td>{{ entry["score"] }} / 20</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No scores yet. Be the first!</p>
+        {% endif %}
+
+        <a href="/">Return home</a>
+    </div>
+</body>
+</html>

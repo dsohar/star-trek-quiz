@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Star Trek Quiz</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <style>
         body {
@@ -34,26 +35,19 @@
 <body>
     <div class="quiz-box">
         <h1>🖖 Star Trek Quiz</h1>
+        <p>
+            Question {{ question_number }} of 10
+            <br>
+            Score: {{ score }} / 20
+        </p>
 
         <h2>{{ question["text"] }}</h2>
 
-        <!-- <p>
+        <p>
             This question is worth {{ question["points"] }} points.
-        </p> -->
+        </p> 
 
         <form method="POST" action="/answer">
-            <input
-                type="hidden"
-                name="correct_answer"
-                value="{{ question['correct'][0] }}"
-            >
-
-            <input
-                type="hidden"
-                name="points"
-                value="{{ question['points'] }}"
-            >
-
             {% for answer in answers %}
                 <button
                     type="submit"

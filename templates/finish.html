@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Complete</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #101522;
+            color: white;
+            text-align: center;
+        }
+
+        .finish-box {
+            background-color: #1e2940;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        button, a {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        a {
+            color: #8fcfff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="finish-box">
+        <h1>🎉 Quiz Complete!</h1>
+
+        <h2>Your score: {{ score }} / 20</h2>
+
+        <p>
+            Want to add your score to the leaderboard?
+        </p>
+
+        <form method="POST" action="/save-score">
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+            >
+
+            <button type="submit">
+                Save Score
+            </button>
+        </form>
+
+        <p>
+            <a href="/">Skip and return home</a>
+        </p>
+    </div>
+</body>
+</html>

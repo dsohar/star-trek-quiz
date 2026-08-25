@@ -2,7 +2,7 @@ import json
 import random
 from pathlib import Path
 
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, redirect, render_template, request, session
 
 app = Flask(__name__)
 app.secret_key = "star-trek-quiz-secret-key"

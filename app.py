@@ -1,15 +1,24 @@
 import json
+import os
 import random
 from pathlib import Path
 
 from flask import Flask, redirect, render_template, request, session
 
 app = Flask(__name__)
-app.secret_key = "star-trek-quiz-secret-key"
 
-PROJECT_DIR = Path(__file__).resolve().parent
-QUESTIONS_FILE = PROJECT_DIR / "star_trek_quiz.json"
-LEADERBOARD_FILE = PROJECT_DIR / "leaderboard.json"
+PROJECT_DIR = Path(os.getenv("PROJECT_DIR", Path(__file__).resolve().parent))
+LEADERBOARD_FILE = os.getenv("LEADERBOARD_FILE", PROJECT_DIR / "leaderboard.json")
+QUESTIONS_FILE = Path(os.getenv("QUESTIONS_FILE", PROJECT_DIR / "star_trek_quiz.json"))
+
+PORT = int(os.getenv("PORT", "5001"))
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret-key") # for the Flask session cookie
+app.secret_key = SECRET_KEY
+
+
+@app.route("/health")
+def health():
+    return {"status": "healthy"}, 200
 
 
 def load_questions() -> list:
@@ -198,4 +207,4 @@ def leaderboard():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=PORT)

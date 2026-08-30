@@ -6,9 +6,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building ${env.APP_NAME}'
-                echo 'Build Number: ${env.BUILD_NUMBER}'
-                sh docker build -t '${env.APP_NAME}:${env.BUILD_NUMBER}' .
+                echo "Building ${env.APP_NAME}"
+                echo "Build Number: ${env.BUILD_NUMBER}"
+                sh docker build -t "${env.APP_NAME}:${env.BUILD_NUMBER}" .
             }
         }
         stage('Test') {

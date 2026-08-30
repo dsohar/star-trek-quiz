@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         APP_NAME = 'star-trek-quiz'
-        TAG = '2.0.${env.BUILD_NUMBER}'
+        TAG = 2.0."${env.BUILD_NUMBER}"
     }
     stages {
         stage('Build Docker Image') {

@@ -32,4 +32,12 @@ pipeline {
             }
         }
     }
+    post {
+        failure {
+            echo 'The pipeline failed!'
+        }
+        success {
+            echo 'The pipeline finished successfully!'
+        }
+    }
 }

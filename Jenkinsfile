@@ -17,7 +17,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     echo "Deploying with username ${env.USERNAME}"
                     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                    sh "docker tag ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ${env.DOCKER_HUB_LOCATION}/${env.USERNAME}:2.0.${env.BUILD_NUMBER}"
+                    sh "docker tag ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:2.0.${env.BUILD_NUMBER}"
+                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:2.0.${env.BUILD_NUMBER}"
                 }
             }
         }

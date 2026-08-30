@@ -1,10 +1,14 @@
 pipeline {
     agent any
+    environment {
+        APP_NAME = 'star-trek-quiz'
+    }
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
-                // Build steps here
+                echo 'Building ${env.APP_NAME}'
+                echo 'Build Number: ${env.BUILD_NUMBER}'
+                sh docker build -t '${env.APP_NAME}:${env.BUILD_NUMBER}' .
             }
         }
         stage('Test') {

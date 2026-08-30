@@ -4,12 +4,21 @@ pipeline {
         APP_NAME = 'star-trek-quiz'
     }
     stages {
-        stage('Build Docker Image') {
-            steps {
-                echo "Building ${env.APP_NAME}"
-                echo "Build Number: ${env.BUILD_NUMBER}"
-                echo "Tag: ${env.TAG}"
-                sh "docker build -t ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ."
+        stage('Building and Scanning in Parallel') {
+            parallel {
+                stage('Build Docker Image') {
+                    steps {
+                        echo "Building ${env.APP_NAME}"
+                        echo "Build Number: ${env.BUILD_NUMBER}"
+                        echo "Tag: ${env.TAG}"
+                        sh "docker build -t ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ."
+                    }
+                }
+                stage('Scan') {
+                    steps {
+                        echo "Scanning ${env.APP_NAME}:2.0.${env.BUILD_NUMBER}"
+                    }
+                }
             }
         }
         stage('Push to DockerHub') {

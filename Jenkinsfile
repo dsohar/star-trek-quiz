@@ -42,7 +42,7 @@ pipeline {
         stage('Health') {
             steps {
                 sh "sleep 5"
-                sh "curl --fail http://localhost:5001/health"
+                sh "curl --fail http://host.docker.internal:5001/health"
             }
         }
     }

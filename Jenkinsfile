@@ -11,12 +11,12 @@ pipeline {
                         echo "Building ${env.APP_NAME}"
                         echo "Build Number: ${env.BUILD_NUMBER}"
                         echo "Tag: ${env.TAG}"
-                        sh "docker build -t ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ."
+                        sh "docker build -t ${env.APP_NAME}:2.1.${env.BUILD_NUMBER} ."
                     }
                 }
                 stage('Scan') {
                     steps {
-                        echo "Scanning ${env.APP_NAME}:2.0.${env.BUILD_NUMBER}"
+                        echo "Scanning ${env.APP_NAME}:2.1.${env.BUILD_NUMBER}"
                     }
                 }
             }
@@ -26,9 +26,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     echo "Deploying with username ${env.USERNAME}"
                     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                    sh "docker tag ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:2.0.${env.BUILD_NUMBER}"
-                    sh "docker tag ${env.APP_NAME}:2.0.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
-                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:2.0.${env.BUILD_NUMBER}"
+                    sh "docker tag ${env.APP_NAME}:2.1.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:2.1.${env.BUILD_NUMBER}"
+                    sh "docker tag ${env.APP_NAME}:2.1.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
+                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:2.1.${env.BUILD_NUMBER}"
                     sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
                 }
             }

@@ -1,7 +1,7 @@
-# 🖖 Star Trek Quiz
+## 🖖 Star Trek Quiz
 
-- 🐳 **[Docker Hub](https://hub.docker.com/r/dsohar/star-trek-quiz)**
-- 💻 **[GitHub Repository](https://github.com/dsohar/star-trek-quiz)**
+* 🐳 **Docker Hub:** https://hub.docker.com/r/dsohar/star-trek-quiz
+* 💻 **GitHub Repository:** https://github.com/dsohar/star-trek-quiz
 
 ## Overview
 
@@ -11,9 +11,9 @@ The application presents the player with a 10-question Star Trek: The Next Gener
 
 Each quiz contains:
 
-- 3 easy questions worth 1 point each
-- 4 medium questions worth 2 points each
-- 3 hard questions worth 3 points each
+* 3 easy questions worth 1 point each
+* 4 medium questions worth 2 points each
+* 3 hard questions worth 3 points each
 
 The maximum possible score is 20 points.
 
@@ -21,7 +21,7 @@ After each answer, the player is shown whether the answer was correct and their 
 
 The leaderboard displays the top 10 scores.
 
-The project was originally created as a Docker exercise and demonstrates how to package and run a Python Flask web application inside a Docker container.
+> **Note:** The leaderboard is currently stored inside the container. Scores created while running the Docker image are therefore lost when the container is removed. Persistent storage will be added at a later stage.
 
 ---
 
@@ -32,6 +32,8 @@ The project was originally created as a Docker exercise and demonstrates how to 
 * Jinja2
 * JSON
 * Docker
+* Kubernetes
+* Helm
 
 ---
 
@@ -50,8 +52,20 @@ star-trek-quiz/
 │   ├── finish.html
 │   └── leaderboard.html
 │
+├── helmchart/
+│   ├── Chart.yaml
+│   ├── values.yaml
+│   └── templates/
+│       ├── NOTES.txt
+│       ├── _helpers.tpl
+│       ├── configmap.yaml
+│       ├── deployment.yaml
+│       ├── ingress.yaml
+│       ├── secret.yaml
+│       └── service.yaml
+│
 ├── app.py
-├── star_trek_quiz.json
+├── star-trek-quiz.json
 ├── leaderboard.json
 ├── requirements.txt
 ├── Dockerfile
@@ -62,21 +76,32 @@ star-trek-quiz/
 
 ### File Description
 
-| File | Purpose |
-| --- | --- |
-| `app.py` | Main Flask application containing the routes and quiz logic. |
-| `star_trek_quiz.json` | Stores the quiz questions, answers and point values. |
-| `leaderboard.json` | Stores player names and scores. |
-| `home.html` | Displays the main menu. |
-| `quiz.html` | Displays the current quiz question and score. |
-| `result.html` | Displays whether the selected answer was correct. |
-| `finish.html` | Displays the final score and allows the player to submit a name. |
-| `leaderboard.html` | Displays the top leaderboard scores. |
-| `favicon.ico` | Browser tab icon for the application. |
-| `Dockerfile` | Defines how to build the Docker image. |
-| `requirements.txt` | Lists the Python dependencies. |
-| `.dockerignore` | Excludes unnecessary files from the Docker image. |
-| `.gitignore` | Excludes unnecessary local files from Git. |
+| File                                  | Purpose                                                          |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| `app.py`                              | Main Flask application containing the routes and quiz logic.     |
+| `star-trek-quiz.json`                 | Stores the quiz questions, answers and point values.             |
+| `leaderboard.json`                    | Stores player names and scores.                                  |
+| `templates/home.html`                 | Displays the main menu.                                          |
+| `templates/quiz.html`                 | Displays the current quiz question and score.                    |
+| `templates/result.html`               | Displays whether the selected answer was correct.                |
+| `templates/finish.html`               | Displays the final score and allows the player to submit a name. |
+| `templates/leaderboard.html`          | Displays the top leaderboard scores.                             |
+| `static/favicon.ico`                  | Browser tab icon for the application.                            |
+| `Dockerfile`                          | Defines how to build the Docker image.                           |
+| `Jenkinsfile`                         | Defines a Jenkins pipeline that builds a Docker.                 |
+| `requirements.txt`                    | Lists the Python dependencies.                                   |
+| `.dockerignore`                       | Excludes unnecessary files from the Docker image.                |
+| `.gitignore`                          | Excludes unnecessary local files from Git.                       |
+| `helmchart/.helmignore`               | Excludes unnecessary local files from Helm.                      |
+| `helmchart/Chart.yaml`                | Defines the Helm chart metadata.                                 |
+| `helmchart/values.yaml`               | Contains configurable values used by the Helm chart.             |
+| `helmchart/templates/deployment.yaml` | Defines the Kubernetes Deployment and application Pods.          |
+| `helmchart/templates/service.yaml`    | Defines the Kubernetes Service.                                  |
+| `helmchart/templates/ingress.yaml`    | Defines the NGINX Ingress.                                       |
+| `helmchart/templates/configmap.yaml`  | Creates the ConfigMap used for application configuration.        |
+| `helmchart/templates/secret.yaml`     | Creates the Kubernetes Secret used for the Flask secret key.     |
+| `helmchart/templates/_helpers.tpl`    | Contains reusable Helm template labels.                          |
+| `helmchart/templates/NOTES.txt`       | Displays information after a Helm install or upgrade.            |
 
 ---
 
@@ -100,10 +125,10 @@ If the image is not already available locally, Docker will automatically pull it
 
 ### Running a Specific Version
 
-To run version 2.0.0:
+To run a specific version, replace the tag with the required version. For example:
 
 ```bash
-docker run --rm -p 5001:5001 dsohar/star-trek-quiz:2.0.0
+docker run --rm -p 5001:5001 dsohar/star-trek-quiz:2.1.0
 ```
 
 ### Docker Image
@@ -112,22 +137,73 @@ Docker Hub repository:
 
 `dsohar/star-trek-quiz`
 
-Available application version:
-
-`dsohar/star-trek-quiz:2.0.0`
-
 The `latest` tag points to the current version.
-
-> **Note:** The leaderboard is currently stored inside the container. Scores created while running the Docker image are therefore lost when the container is removed. Persistent storage will be added as part of the Kubernetes deployment.
 
 ---
 
-## Running the Application Without Docker
+## Running the Application With Kubernetes and Helm
+
+The Helm chart deploys the application to Kubernetes using the Docker image from Docker Hub.
+
+The deployment includes:
+* 3 application replicas
+* A ClusterIP Service
+* An NGINX Ingress
+* A ConfigMap
+* A Kubernetes Secret
+* Liveness and readiness probes
+* CPU and memory resource requests and limits
+* Pod anti-affinity to prefer distributing replicas across different Kubernetes nodes.
+
+The Docker image can be pulled using the `latest` tag.
+
+### Install the Application
+
+```bash
+helm install enterprise ./helmchart \
+  --set-string secret.secretKey="your-secret-key"
+```
+
+Check the deployed resources:
+
+```bash
+kubectl get pods
+kubectl get service
+kubectl get ingress
+```
+
+Then open your browser and navigate to:
+
+```text
+http://<INGRESS-ADDRESS>/star-trek-quiz
+```
+
+
+### Upgrade the Application
+
+After a new Docker image has been built and pushed to Docker Hub:
+
+```bash
+helm upgrade enterprise ./helmchart \
+  --set-string secret.secretKey="your-secret-key"
+```
+
+### Roll Back
+
+To roll back to a previous Helm revision:
+
+```bash
+helm rollback enterprise <revision>
+```
+
+---
+
+## Running the Application Locally
 
 ### Requirements
 
-- Python 3.14
-- pip
+* Python 3.14
+* pip
 
 ### Clone the Repository
 
@@ -174,21 +250,31 @@ http://localhost:5001
 
 ## Versions
 
+### v2.1.0
+
+* Added Kubernetes deployment using Helm
+* Added Deployment, Service and Ingress resources
+* Added ConfigMap and Kubernetes Secret
+* Added liveness and readiness health checks
+* Added CPU and memory resource requests and limits
+* Added pod anti-affinity for distributing replicas across Kubernetes nodes
+* Added Helm upgrade and rollback support
+
 ### v2.0.0
 
-- Added complete 10-question games
-- Added easy, medium and hard question difficulty levels
-- Added point-based scoring
-- Expanded the Star Trek: The Next Generation question bank
-- Added Flask session-based game state
-- Added player name submission
-- Added a top-10 leaderboard
-- Added a home screen
-- Added a browser favicon
+* Added complete 10-question games
+* Added easy, medium and hard question difficulty levels
+* Added point-based scoring
+* Expanded the Star Trek: The Next Generation question bank
+* Added Flask session-based game state
+* Added player name submission
+* Added a top-10 leaderboard
+* Added a home screen
+* Added a browser favicon
 
 ### v1.0.0
 
-- Initial Flask application
-- Random Star Trek trivia questions
-- Docker support
-- Docker Hub distribution
+* Initial Flask application
+* Random Star Trek trivia questions
+* Docker support
+* Docker Hub distribution

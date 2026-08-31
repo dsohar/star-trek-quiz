@@ -33,11 +33,28 @@ pipeline {
                 }
             }
         }
+        stage('Run Docker Image') {
+            steps {
+                sh "docker run -d --name star-trek-quiz-test -p 5001:5001 dsohar/star-trek-quiz:2.1.${env.BUILD_NUMBER}"
+            }
+        }
+
+        stage('Health') {
+            steps {
+                sh "sleep 5"
+                sh "curl --fail http://localhost:5001/health"
+            }
+        }
     }
     post {
+        always {
+            sh 'docker rm -f star-trek-quiz-test || true'
+        }
+
         failure {
             echo 'The pipeline failed!'
         }
+
         success {
             echo 'The pipeline finished successfully!'
         }

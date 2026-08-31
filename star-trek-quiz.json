@@ -1,406 +1,554 @@
 [
-  {
-    "text": "What is Data's cat's name?",
-    "correct": ["Spot"],
-    "incorrect": ["Shadow", "Patches", "Newton"],
-    "points": 2
-  },
-  {
-    "text": "What is the name of the first ship Picard commanded?",
-    "correct": ["USS Stargazer"],
-    "incorrect": ["USS Enterprise", "USS Reliant", "USS Defiant"],
-    "points": 3
-  },
-  {
-    "text": "Who originally helped design the Enterprise-D's warp propulsion systems?",
-    "correct": ["Dr. Leah Brahms"],
-    "incorrect": ["Geordi La Forge", "Dr. Beverly Crusher", "Commander Shelby"],
-    "points": 3
-  },
-  {
-    "text": "How was the Enterprise-C destroyed?",
-    "correct": ["Defending a Klingon outpost from a Romulan attack"],
-    "incorrect": ["Destroyed by the Borg", "Destroyed by a warp core breach", "Destroyed by Cardassians"],
-    "points": 2
-  },
-  {
-    "text": "Why did Q bring the Enterprise crew to Sherwood Forest?",
-    "correct": ["He wanted to do something nice for Picard"],
-    "incorrect": ["To test Worf", "To punish Data", "To train the crew for battle"],
-    "points": 2
-  },
-  {
-    "text": "What is the name of the Enterprise-D's sister ship?",
-    "correct": ["USS Yamato"],
-    "incorrect": ["USS Odyssey", "USS Galaxy", "USS Excelsior"],
-    "points": 3
-  },
-  {
-    "text": "Who led the Klingon High Council following the death of K'mpec?",
-    "correct": ["Gowron"],
-    "incorrect": ["Martok", "Worf", "Duras"],
-    "points": 2
-  },
-  {
-    "text": "Where was the Enterprise-D constructed?",
-    "correct": ["Utopia Planitia Fleet Yards"],
-    "incorrect": ["Earth Spacedock", "Deep Space Nine", "Starbase 74"],
-    "points": 1
-  },
-  {
-    "text": "What are the Enterprise's maintenance shafts called?",
-    "correct": ["Jefferies Tubes"],
-    "incorrect": ["Transfer Shafts", "Plasma Access Routes", "Maintenance Corridors"],
-    "points": 1
-  },
-  {
-    "text": "Where was Captain Picard born?",
-    "correct": ["La Barre, France"],
-    "incorrect": ["Paris, France", "London, England", "Marseille, France"],
-    "points": 1
-  },
-  {
-    "text": "Who was the first person in the episode to actually say the word 'Borg'?",
-    "correct": ["Guinan"],
-    "incorrect": ["Q", "One of the Borg drones", "Deanna Troi"],
-    "points": 3
-  },
-  {
-    "text": "In what season did Riker first appear with his beard?",
-    "correct": ["Second"],
-    "incorrect": ["Third", "Fourth", "Fifth"],
-    "points": 1
-  },
-  {
-    "text": "What sort of imaginary friend did Guinan have as a child?",
-    "correct": ["Tarcassian razor beast"],
-    "incorrect": ["Klingon targ", "Circassian cat", "Dog"],
-    "points": 3
-  },
-  {
-    "text": "What was Hugh's Borg designation before he was given a name?",
-    "correct": ["Third of Five"],
-    "incorrect": [
-        "Third of Nine",
-        "Five of Seven",
-        "Fourth of Five"
-    ],
-    "points": 2
-  },
-  {
-    "text": "How many lights are there?",
-    "correct": ["There are Four Lights!!!"],
-    "incorrect": ["Three", "Five", "Six"],
-    "points": 1
-  },
-  {
-      "text": "What is the final line said in Star Trek: The Next Generation?",
-      "correct": ["And the sky's the limit."],
-      "incorrect": [
-          "Make it so.",
-          "Engage.",
-          "The trial never ends."
-      ],
-      "points": 2
-  },
-  {
-      "text": "What alias does Picard use while undercover with Baran's mercenaries in Gambit?",
-      "correct": ["Galen"],
-      "incorrect": [
-          "Kamin",
-          "Mot",
-          "Dathon"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What species is Guinan?",
-      "correct": ["El-Aurian"],
-      "incorrect": [
-          "Betazoid",
-          "Bajoran",
-          "Ocampa"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What was the name of Data's daughter?",
-      "correct": ["Lal"],
-      "incorrect": [
-          "Jenna",
-          "Juliana",
-          "Tasha"
-      ],
-      "points": 1
-  },
-  {
-      "text": "What was the name of Data's mother?",
-      "correct": ["Juliana Tainer"],
-      "incorrect": [
-          "Leah Brahms",
-          "Ira Graves",
-          "Jenna D'Sora"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What is the name of the Tamarian captain in Darmok?",
-      "correct": ["Dathon"],
-      "incorrect": [
-          "Sokath",
-          "Temba",
-          "Zinda"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What ship did Riker serve aboard immediately before the Enterprise-D?",
-      "correct": ["USS Hood"],
-      "incorrect": [
-          "USS Melbourne",
-          "USS Potemkin",
-          "USS Pegasus"
-      ],
-      "points": 2
-  },
-  {
-      "text": "What is Worf's human brother's name?",
-      "correct": ["Nikolai Rozhenko"],
-      "incorrect": [
-          "Sergey Rozhenko",
-          "Kurn",
-          "Alexander Rozhenko"
-      ],
-      "points": 2
-  },
-  {
-      "text": "What is the name of Alexander Rozhenko's mother?",
-      "correct": ["K'Ehleyr"],
-      "incorrect": [
-          "Lursa",
-          "B'Etor",
-          "Kahlest"
-      ],
-      "points": 1
-  },
-  {
-      "text": "What is Barclay's first name?",
-      "correct": ["Reginald"],
-      "incorrect": [
-          "Richard",
-          "Robert",
-          "Raymond"
-      ],
-      "points": 1
-  },
-  {
-      "text": "What drink does Picard usually order from the replicator?",
-      "correct": ["Tea, Earl Grey, hot"],
-      "incorrect": [
-          "Coffee, black",
-          "Tea, Darjeeling, hot",
-          "Green Tea, cold"
-      ],
-      "points": 1
-  },
-  {
-      "text": "What musical instrument does Riker play?",
-      "correct": ["Trombone"],
-      "incorrect": [
-          "Trumpet",
-          "Saxophone",
-          "Clarinet"
-      ],
-      "points": 1
-  },
-  {
-      "text": "Who created Data?",
-      "correct": ["Dr. Noonien Soong"],
-      "incorrect": [
-          "Dr. Ira Graves",
-          "Dr. Bruce Maddox",
-          "Dr. Lewis Zimmerman"
-      ],
-      "points": 1
-  },
-  {
-      "text": "What name does Picard live under during his lifetime on Kataan in The Inner Light?",
-      "correct": ["Kamin"],
-      "incorrect": [
-          "Galen",
-          "Batai",
-          "Eline"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What is Lore's relationship to Data?",
-      "correct": ["His older android brother"],
-      "incorrect": [
-          "His younger android brother",
-          "His creator",
-          "A duplicate created by Starfleet"
-      ],
-      "points": 1
-  },
-  {
-      "text": "Who kills Duras?",
-      "correct": ["Worf"],
-      "incorrect": [
-          "K'Ehleyr",
-          "Gowron",
-          "Picard"
-      ],
-      "points": 2
-  },
-  {
-      "text": "Where does Boothby work?",
-      "correct": ["Starfleet Academy"],
-      "incorrect": [
-          "Starfleet Headquarters",
-          "Utopia Planitia Fleet Yards",
-          "The Daystrom Institute"
-      ],
-      "points": 2
-  },
-  {
-      "text": "What is the name of Picard's brother?",
-      "correct": ["Robert"],
-      "incorrect": [
-          "René",
-          "Maurice",
-          "Louis"
-      ],
-      "points": 2
-  },
-  {
-      "text": "What was the name of the archaeology professor who mentored Picard?",
-      "correct": ["Richard Galen"],
-      "incorrect": [
-          "Ira Graves",
-          "Berlinghoff Rasmussen",
-          "Noonien Soong"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What is the name of the Klingon monastery where Worf experiences a vision of Kahless?",
-      "correct": ["Boreth"],
-      "incorrect": [
-          "Qo'noS",
-          "Khala",
-          "Rura Penthe"
-      ],
-      "points": 3
-  },
-  {
-      "text": "On what colony did Tasha Yar grow up?",
-      "correct": ["Turkana IV"],
-      "incorrect": [
-          "Omicron Theta",
-          "Tau Cygna V",
-          "Moab IV"
-      ],
-      "points": 3
-  },
-  {
-      "text": "Who initially avoids becoming addicted to The Game and discovers what is happening to the crew?",
-      "correct": ["Wesley Crusher"],
-      "incorrect": [
-          "Data",
-          "Geordi La Forge",
-          "Reginald Barclay"
-      ],
-      "points": 2
-  },
-  {
-      "text": "What species is the symbiont-based humanoid race introduced in The Host?",
-      "correct": ["Trill"],
-      "incorrect": [
-          "Betazoid",
-          "Bajoran",
-          "El-Aurian"
-      ],
-      "points": 2
-  },
-  {
-      "text": "Whose consciousness takes control of Data in The Schizoid Man?",
-      "correct": ["Ira Graves"],
-      "incorrect": [
-          "Noonien Soong",
-          "Bruce Maddox",
-          "Richard Galen"
-      ],
-      "points": 3
-  },
-  {
-      "text": "What is the name of Professor Moriarty's companion?",
-      "correct": ["Countess Regina Bartholomew"],
-      "incorrect": [
-          "Lady Catherine Moriarty",
-          "Irene Adler",
-          "Lady Regina Pulaski"
-      ],
-      "points": 3
-  },
-  {
-    "text": "What does the phrase 'one moon circles' represent?",
-    "correct": ["A hydrogen atom"],
-    "incorrect": [
-        "A child playing with a ball",
-        "A moon orbiting a planet",
-        "A clock"
-    ],
-    "points": 2
-  },
-  {
-      "text": "What component of the transporter compensates for the uncertainty in a particle's position and momentum?",
-      "correct": ["The Heisenberg compensator"],
-      "incorrect": [
-          "The pattern buffer",
-          "The phase transition coil",
-          "The biofilter"
-      ],
-      "points": 2
-  },
-  {
-      "text": "If there's nothing wrong with Beverly, what must be wrong?",
-      "correct": ["The universe"],
-      "incorrect": [
-          "The Enterprise",
-          "The computer",
-          "Her memory"
-      ],
-      "points": 1
-  },
-  {
-    "text": "Who argues that Data is Starfleet property and can be dismantled for research?",
-    "correct": ["Bruce Maddox"],
-    "incorrect": [
-        "Phillipa Louvois",
-        "Noonien Soong",
-        "Reginald Barclay"
-    ],
-    "points": 1
-  },
-  {
-    "text": "What famous author does the Enterprise crew meet in 19th-century San Francisco?",
-    "correct": ["Samuel Clemens (Mark Twain)"],
-    "incorrect": [
-        "Jules Verne",
-        "H. G. Wells",
-        "Arthur Conan Doyle"
-    ],
-    "points": 2
-  },
-  {
-    "text": "Who does Miles O'Brien marry?",
-    "correct": ["Keiko Ishikawa"],
-    "incorrect": [
-        "Alyssa Ogawa",
-        "Robin Lefler",
-        "Jenna D'Sora"
-    ],
-    "points": 1
-  }
+    {
+        "text": "What is Data's cat's name?",
+        "correct": [
+            "Spot"
+        ],
+        "incorrect": [
+            "Shadow",
+            "Patches",
+            "Newton"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What is the name of the first ship Picard commanded?",
+        "correct": [
+            "USS Stargazer"
+        ],
+        "incorrect": [
+            "USS Enterprise",
+            "USS Reliant",
+            "USS Defiant"
+        ],
+        "points": 3
+    },
+    {
+        "text": "Who originally helped design the Enterprise-D's warp propulsion systems?",
+        "correct": [
+            "Dr. Leah Brahms"
+        ],
+        "incorrect": [
+            "Geordi La Forge",
+            "Dr. Beverly Crusher",
+            "Commander Shelby"
+        ],
+        "points": 3
+    },
+    {
+        "text": "How was the Enterprise-C destroyed?",
+        "correct": [
+            "Defending a Klingon outpost from a Romulan attack"
+        ],
+        "incorrect": [
+            "Destroyed by the Borg",
+            "Destroyed by a warp core breach",
+            "Destroyed by Cardassians"
+        ],
+        "points": 2
+    },
+    {
+        "text": "Why did Q bring the Enterprise crew to Sherwood Forest?",
+        "correct": [
+            "He wanted to do something nice for Picard"
+        ],
+        "incorrect": [
+            "To test Worf",
+            "To punish Data",
+            "To train the crew for battle"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What is the name of the Enterprise-D's sister ship?",
+        "correct": [
+            "USS Yamato"
+        ],
+        "incorrect": [
+            "USS Odyssey",
+            "USS Galaxy",
+            "USS Excelsior"
+        ],
+        "points": 3
+    },
+    {
+        "text": "Who led the Klingon High Council following the death of K'mpec?",
+        "correct": [
+            "Gowron"
+        ],
+        "incorrect": [
+            "Martok",
+            "Worf",
+            "Duras"
+        ],
+        "points": 2
+    },
+    {
+        "text": "Where was the Enterprise-D constructed?",
+        "correct": [
+            "Utopia Planitia Fleet Yards"
+        ],
+        "incorrect": [
+            "Earth Spacedock",
+            "Deep Space Nine",
+            "Starbase 74"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What are the Enterprise's maintenance shafts called?",
+        "correct": [
+            "Jefferies Tubes"
+        ],
+        "incorrect": [
+            "Transfer Shafts",
+            "Plasma Access Routes",
+            "Maintenance Corridors"
+        ],
+        "points": 1
+    },
+    {
+        "text": "Where was Captain Picard born?",
+        "correct": [
+            "La Barre, France"
+        ],
+        "incorrect": [
+            "Paris, France",
+            "London, England",
+            "Marseille, France"
+        ],
+        "points": 1
+    },
+    {
+        "text": "Who was the first person in the episode to actually say the word 'Borg'?",
+        "correct": [
+            "Guinan"
+        ],
+        "incorrect": [
+            "Q",
+            "One of the Borg drones",
+            "Deanna Troi"
+        ],
+        "points": 3
+    },
+    {
+        "text": "In what season did Riker first appear with his beard?",
+        "correct": [
+            "Second"
+        ],
+        "incorrect": [
+            "Third",
+            "Fourth",
+            "Fifth"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What sort of imaginary friend did Guinan have as a child?",
+        "correct": [
+            "Tarcassian razor beast"
+        ],
+        "incorrect": [
+            "Klingon targ",
+            "Circassian cat",
+            "Dog"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What was Hugh's Borg designation before he was given a name?",
+        "correct": [
+            "Third of Five"
+        ],
+        "incorrect": [
+            "Third of Nine",
+            "Five of Seven",
+            "Fourth of Five"
+        ],
+        "points": 2
+    },
+    {
+        "text": "How many lights are there?",
+        "correct": [
+            "There are Four Lights!!!"
+        ],
+        "incorrect": [
+            "Three",
+            "Five",
+            "Six"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What is the final line said in Star Trek: The Next Generation?",
+        "correct": [
+            "And the sky's the limit."
+        ],
+        "incorrect": [
+            "Make it so.",
+            "Engage.",
+            "The trial never ends."
+        ],
+        "points": 2
+    },
+    {
+        "text": "What alias does Picard use while undercover with Baran's mercenaries in Gambit?",
+        "correct": [
+            "Galen"
+        ],
+        "incorrect": [
+            "Kamin",
+            "Mot",
+            "Dathon"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What species is Guinan?",
+        "correct": [
+            "El-Aurian"
+        ],
+        "incorrect": [
+            "Betazoid",
+            "Bajoran",
+            "Ocampa"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What was the name of Data's daughter?",
+        "correct": [
+            "Lal"
+        ],
+        "incorrect": [
+            "Jenna",
+            "Juliana",
+            "Tasha"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What was the name of Data's mother?",
+        "correct": [
+            "Juliana Tainer"
+        ],
+        "incorrect": [
+            "Leah Brahms",
+            "Ira Graves",
+            "Jenna D'Sora"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What is the name of the Tamarian captain in Darmok?",
+        "correct": [
+            "Dathon"
+        ],
+        "incorrect": [
+            "Sokath",
+            "Temba",
+            "Zinda"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What ship did Riker serve aboard immediately before the Enterprise-D?",
+        "correct": [
+            "USS Hood"
+        ],
+        "incorrect": [
+            "USS Melbourne",
+            "USS Potemkin",
+            "USS Pegasus"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What is Worf's human brother's name?",
+        "correct": [
+            "Nikolai Rozhenko"
+        ],
+        "incorrect": [
+            "Sergey Rozhenko",
+            "Kurn",
+            "Alexander Rozhenko"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What is the name of Alexander Rozhenko's mother?",
+        "correct": [
+            "K'Ehleyr"
+        ],
+        "incorrect": [
+            "Lursa",
+            "B'Etor",
+            "Kahlest"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What is Barclay's first name?",
+        "correct": [
+            "Reginald"
+        ],
+        "incorrect": [
+            "Richard",
+            "Robert",
+            "Raymond"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What drink does Picard usually order from the replicator?",
+        "correct": [
+            "Tea, Earl Grey, hot"
+        ],
+        "incorrect": [
+            "Coffee, black",
+            "Tea, Darjeeling, hot",
+            "Green Tea, cold"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What musical instrument does Riker play?",
+        "correct": [
+            "Trombone"
+        ],
+        "incorrect": [
+            "Trumpet",
+            "Saxophone",
+            "Clarinet"
+        ],
+        "points": 1
+    },
+    {
+        "text": "Who created Data?",
+        "correct": [
+            "Dr. Noonien Soong"
+        ],
+        "incorrect": [
+            "Dr. Ira Graves",
+            "Dr. Bruce Maddox",
+            "Dr. Lewis Zimmerman"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What name does Picard live under during his lifetime on Kataan in The Inner Light?",
+        "correct": [
+            "Kamin"
+        ],
+        "incorrect": [
+            "Galen",
+            "Batai",
+            "Eline"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What is Lore's relationship to Data?",
+        "correct": [
+            "His older android brother"
+        ],
+        "incorrect": [
+            "His younger android brother",
+            "His creator",
+            "A duplicate created by Starfleet"
+        ],
+        "points": 1
+    },
+    {
+        "text": "Who kills Duras?",
+        "correct": [
+            "Worf"
+        ],
+        "incorrect": [
+            "K'Ehleyr",
+            "Gowron",
+            "Picard"
+        ],
+        "points": 2
+    },
+    {
+        "text": "Where does Boothby work?",
+        "correct": [
+            "Starfleet Academy"
+        ],
+        "incorrect": [
+            "Starfleet Headquarters",
+            "Utopia Planitia Fleet Yards",
+            "The Daystrom Institute"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What is the name of Picard's brother?",
+        "correct": [
+            "Robert"
+        ],
+        "incorrect": [
+            "René",
+            "Maurice",
+            "Louis"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What was the name of the archaeology professor who mentored Picard?",
+        "correct": [
+            "Richard Galen"
+        ],
+        "incorrect": [
+            "Ira Graves",
+            "Berlinghoff Rasmussen",
+            "Noonien Soong"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What is the name of the Klingon monastery where Worf experiences a vision of Kahless?",
+        "correct": [
+            "Boreth"
+        ],
+        "incorrect": [
+            "Qo'noS",
+            "Khala",
+            "Rura Penthe"
+        ],
+        "points": 3
+    },
+    {
+        "text": "On what colony did Tasha Yar grow up?",
+        "correct": [
+            "Turkana IV"
+        ],
+        "incorrect": [
+            "Omicron Theta",
+            "Tau Cygna V",
+            "Moab IV"
+        ],
+        "points": 3
+    },
+    {
+        "text": "Who initially avoids becoming addicted to The Game and discovers what is happening to the crew?",
+        "correct": [
+            "Wesley Crusher"
+        ],
+        "incorrect": [
+            "Data",
+            "Geordi La Forge",
+            "Reginald Barclay"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What species is the symbiont-based humanoid race introduced in The Host?",
+        "correct": [
+            "Trill"
+        ],
+        "incorrect": [
+            "Betazoid",
+            "Bajoran",
+            "El-Aurian"
+        ],
+        "points": 2
+    },
+    {
+        "text": "Whose consciousness takes control of Data in The Schizoid Man?",
+        "correct": [
+            "Ira Graves"
+        ],
+        "incorrect": [
+            "Noonien Soong",
+            "Bruce Maddox",
+            "Richard Galen"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What is the name of Professor Moriarty's companion?",
+        "correct": [
+            "Countess Regina Bartholomew"
+        ],
+        "incorrect": [
+            "Lady Catherine Moriarty",
+            "Irene Adler",
+            "Lady Regina Pulaski"
+        ],
+        "points": 3
+    },
+    {
+        "text": "What does the phrase 'one moon circles' represent?",
+        "correct": [
+            "A hydrogen atom"
+        ],
+        "incorrect": [
+            "A child playing with a ball",
+            "A moon orbiting a planet",
+            "A clock"
+        ],
+        "points": 2
+    },
+    {
+        "text": "What component of the transporter compensates for the uncertainty in a particle's position and momentum?",
+        "correct": [
+            "The Heisenberg compensator"
+        ],
+        "incorrect": [
+            "The pattern buffer",
+            "The phase transition coil",
+            "The biofilter"
+        ],
+        "points": 2
+    },
+    {
+        "text": "If there's nothing wrong with Beverly, what must be wrong?",
+        "correct": [
+            "The universe"
+        ],
+        "incorrect": [
+            "The Enterprise",
+            "The computer",
+            "Her memory"
+        ],
+        "points": 1
+    },
+    {
+        "text": "Who argues that Data is Starfleet property and can be dismantled for research?",
+        "correct": [
+            "Bruce Maddox"
+        ],
+        "incorrect": [
+            "Phillipa Louvois",
+            "Noonien Soong",
+            "Reginald Barclay"
+        ],
+        "points": 1
+    },
+    {
+        "text": "What famous author does the Enterprise crew meet in 19th-century San Francisco?",
+        "correct": [
+            "Samuel Clemens (Mark Twain)"
+        ],
+        "incorrect": [
+            "Jules Verne",
+            "H. G. Wells",
+            "Arthur Conan Doyle"
+        ],
+        "points": 2
+    },
+    {
+        "text": "Who does Miles O'Brien marry?",
+        "correct": [
+            "Keiko Ishikawa"
+        ],
+        "incorrect": [
+            "Alyssa Ogawa",
+            "Robin Lefler",
+            "Jenna D'Sora"
+        ],
+        "points": 1
+    }
 ]

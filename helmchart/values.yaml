@@ -1,0 +1,24 @@
+replicaCount: 3
+
+image:
+  repository: dsohar/star-trek-quiz
+  pullPolicy: Always
+  tag: "latest"
+
+app:
+  port: 5001
+  questionsFile: "/app/star-trek-quiz.json"
+  leaderboardFile: "/app/leaderboard.json"
+
+secret:
+  secretKey: "replace-me" # real key should not be pushed to git
+
+service:
+  type: ClusterIP
+  port: 5001
+
+ingress:
+  className: nginx
+  path: /star-trek-quiz
+  pathType: Prefix
+

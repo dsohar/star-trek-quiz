@@ -1,0 +1,16 @@
+🖖 Star Trek Quiz deployment complete.
+
+Release:
+  {{ .Release.Name }}
+
+Service:
+  {{ .Release.Name }}-{{ .Chart.Name }}
+
+Port:
+  {{ .Values.service.port }}
+
+Ingress:
+  {{ .Values.ingress.path }}
+
+Status:
+  The clown can stay, but the Ferengi in the gorilla suit has to go.

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: star-trek-quiz
+description: A Helm chart for deploying the Star Trek Quiz Flask application
+type: application
+
+version: 0.1.0
+

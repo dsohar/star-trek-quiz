@@ -1,3 +1,5 @@
+@Library('my-shared-library') _
+
 pipeline {
     agent any
     environment {
@@ -9,10 +11,11 @@ pipeline {
             parallel {
                 stage('Build Docker Image') {
                     steps {
-                        echo "Building ${env.APP_NAME}"
-                        echo "Build Number: ${env.BUILD_NUMBER}"
-                        echo "Tag: ${env.TAG}"
-                        sh "docker build -t ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ."
+                        dockerLibrary.buildDockerImage('main')
+                        // echo "Building ${env.APP_NAME}"
+                        // echo "Build Number: ${env.BUILD_NUMBER}"
+                        // echo "Tag: ${env.TAG}"
+                        // sh "docker build -t ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ."
                     }
                 }
                 stage('Scan') {

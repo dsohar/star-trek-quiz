@@ -36,8 +36,7 @@ pipeline {
         }
         stage('Run Docker Image') {
             steps {
-                echo "Deploying with username ${env.USERNAME}"
-                sh "docker run -d --name ${env.APP_NAME}-test -p 5001:5001 ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                sh "docker run -d --name ${env.APP_NAME}-test -p 5001:5001 dsohar/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
             }
         }
 

@@ -10,7 +10,7 @@ Port:
   {{ .Values.service.port }}
 
 Ingress:
-  {{ .Values.ingress.path }}
+  star-trek-quiz.{{ .Values.ingress.ip }}.nip.io
 
 Status:
   The clown can stay, but the Ferengi in the gorilla suit has to go.

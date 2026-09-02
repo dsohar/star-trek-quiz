@@ -21,19 +21,19 @@ pipeline {
                 }
             }
         }
-        stage('Push to DockerHub') {
-            steps {
-                dockerLibrary.pushToDockerHub()
-                // withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                //     echo "Deploying with username ${env.USERNAME}"
-                //     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
-                //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
-                //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
-                //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
-                // }
-            }
-        }
+        // stage('Push to DockerHub') {
+        //     steps {
+        //         dockerLibrary.pushToDockerHub()
+        //         // withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+        //         //     echo "Deploying with username ${env.USERNAME}"
+        //         //     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+        //         //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+        //         //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
+        //         //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+        //         //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
+        //         // }
+        //     }
+        // }
         stage('Run Docker Image') {
             steps {
                 sh "docker run -d --name ${env.APP_NAME}-test -p 5001:5001 dsohar/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"

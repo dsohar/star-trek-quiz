@@ -19,7 +19,7 @@ pipeline {
                 stage('Scan Docker Image') {
                     steps {
                         script {
-                            dockerLibrary.scanDockerImage()
+                            codeQuality.sonarCreateProject(${env.APP_NAME})
                         }
                     }
                 }
@@ -39,7 +39,6 @@ pipeline {
                 }
             }
         }
-
         stage('Health Check') {
             steps {
                 script{

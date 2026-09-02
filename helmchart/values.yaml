@@ -19,6 +19,7 @@ service:
 
 ingress:
   className: nginx
-  host: star-trek-quiz.192.168.49.2.nip.io
+  # host: star-trek-quiz.192.168.49.2.nip.io
+  ip: 192.168.49.2
   pathType: Prefix
 

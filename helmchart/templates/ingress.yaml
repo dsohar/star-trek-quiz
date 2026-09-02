@@ -10,7 +10,7 @@ spec:
   ingressClassName: {{ .Values.ingress.className }}
 
   rules:
-    - host: {{ .Values.ingress.host }}
+    - host: star-trek-quiz.{{ .Values.ingress.ip }}.nip.io
       http:
         paths:
           - path: /

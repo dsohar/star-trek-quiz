@@ -16,9 +16,11 @@ pipeline {
                         }
                     }
                 }
-                stage('Scan') {
+                stage('Scan Docker Image') {
                     steps {
-                        echo "Scanning ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                        script {
+                            dockerLibrary.scanDockerImage()
+                        }
                     }
                 }
             }
@@ -28,40 +30,41 @@ pipeline {
                 script{
                     dockerLibrary.pushToDockerHub()
                 }
-                // withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                //     echo "Deploying with username ${env.USERNAME}"
-                //     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
-                //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
-                //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
-                //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
-                // }
             }
         }
         stage('Run Docker Image') {
             steps {
-                sh "docker run -d --name ${env.APP_NAME}-test -p 5001:5001 dsohar/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                script {
+                    dockerLibrary.runDockerImage()
+                }
             }
         }
 
         stage('Health Check') {
             steps {
-                sh "sleep 5"
-                sh "curl --fail http://host.docker.internal:5001/health"
+                script{
+                    starTrekQuizLibrary.healthCheck()
+                }
             }
         }
     }
     post {
         always {
-            sh 'docker rm -f star-trek-quiz-test || true'
+            script {
+                dockerLibrary.removeDockerImage()
+            }
         }
 
         failure {
-            echo 'The pipeline failed!'
+            script {
+                generalLibrary.failureMessage()
+            }
         }
 
         success {
-            echo 'The pipeline finished successfully!'
+            script {
+                generalLibrary.successMessage()
+            }
         }
     }
 }

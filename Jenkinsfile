@@ -19,7 +19,7 @@ pipeline {
                 stage('Scan Docker Image') {
                     steps {
                         script {
-                            codeQuality.sonarCreateProject('star-trek-quiz')
+                            codeQuality.sonarCreateProject(env.APP_NAME)
                         }
                     }
                 }

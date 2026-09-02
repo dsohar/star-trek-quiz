@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         APP_NAME = 'star-trek-quiz'
+        MAJOR_VERSION = 2.1
     }
     stages {
         stage('Building and Scanning in Parallel') {
@@ -11,12 +12,12 @@ pipeline {
                         echo "Building ${env.APP_NAME}"
                         echo "Build Number: ${env.BUILD_NUMBER}"
                         echo "Tag: ${env.TAG}"
-                        sh "docker build -t ${env.APP_NAME}:2.1.${env.BUILD_NUMBER} ."
+                        sh "docker build -t ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ."
                     }
                 }
                 stage('Scan') {
                     steps {
-                        echo "Scanning ${env.APP_NAME}:2.1.${env.BUILD_NUMBER}"
+                        echo "Scanning ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
                     }
                 }
             }
@@ -26,20 +27,20 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     echo "Deploying with username ${env.USERNAME}"
                     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                    sh "docker tag ${env.APP_NAME}:2.1.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:2.1.${env.BUILD_NUMBER}"
-                    sh "docker tag ${env.APP_NAME}:2.1.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
-                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:2.1.${env.BUILD_NUMBER}"
+                    sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                    sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
+                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
                     sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
                 }
             }
         }
         stage('Run Docker Image') {
             steps {
-                sh "docker run -d --name star-trek-quiz-test -p 5001:5001 dsohar/star-trek-quiz:2.1.${env.BUILD_NUMBER}"
+                sh "docker run -d --name ${env.APP_NAME}-test -p 5001:5001 ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
             }
         }
 
-        stage('Health') {
+        stage('Health Check') {
             steps {
                 sh "sleep 5"
                 sh "curl --fail http://host.docker.internal:5001/health"

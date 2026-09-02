@@ -7,6 +7,12 @@ pipeline {
         MAJOR_VERSION = 2.1
     }
     stages {
+        stage('Checkout') {
+            steps {
+	    	    echo 'Pull SCM...'
+	    	    checkout scm
+          	}
+        }
         stage('Building and Scanning in Parallel') {
             parallel {
                 stage('Build Docker Image') {

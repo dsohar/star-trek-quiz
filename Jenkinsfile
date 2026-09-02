@@ -21,6 +21,9 @@ pipeline {
                         script {
                             codeQuality.sonarCreateProject(env.APP_NAME)
                         }
+                        script {
+                            codeQuality.sonarLocalScan()
+                        }
                     }
                 }
             }

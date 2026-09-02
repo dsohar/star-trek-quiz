@@ -12,10 +12,6 @@ pipeline {
                 stage('Build Docker Image') {
                     steps {
                         dockerLibrary.buildDockerImage('main')
-                        // echo "Building ${env.APP_NAME}"
-                        // echo "Build Number: ${env.BUILD_NUMBER}"
-                        // echo "Tag: ${env.TAG}"
-                        // sh "docker build -t ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ."
                     }
                 }
                 stage('Scan') {
@@ -27,14 +23,15 @@ pipeline {
         }
         stage('Push to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    echo "Deploying with username ${env.USERNAME}"
-                    sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
-                    sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
-                    sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
-                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
-                    sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
-                }
+                dockerLibrary.pushToDockerHub()
+                // withCredentials([usernamePassword(credentialsId: 'docker-hub-dsohar', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                //     echo "Deploying with username ${env.USERNAME}"
+                //     sh "docker login -u ${env.USERNAME} -p ${env.PASSWORD}"
+                //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                //     sh "docker tag ${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER} ${env.USERNAME}/${env.APP_NAME}:latest"
+                //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+                //     sh "docker push ${env.USERNAME}/${env.APP_NAME}:latest"
+                // }
             }
         }
         stage('Run Docker Image') {

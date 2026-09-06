@@ -17,11 +17,11 @@ podTemplate(cloud: 'kubernetes', containers: [
         privileged: true,      // Essential for Docker daemon to run
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
     ),
-    sonarqubeTemplate(
+    containerTemplate(
         name: 'sonarqube',
         image: 'sonarsource/sonar-scanner-cli:latest'
     ),
-    helmTemplate(
+    containerTemplate(
         name: 'helm',
         image: 'alpine/helm:latest'
     )

@@ -58,9 +58,14 @@ podTemplate(cloud: 'kubernetes', containers: [
 
                 'Scan Docker Image': {
                     stage('Scan Code') {
-                        container('docker') {
+                        container('sonarqube') {
                             echo "Scanning..."
-                            //  sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL ${appimage}:${apptag}'
+                            script {
+                                codeQuality.sonarCreateProject(env.APP_NAME)
+                            }
+                            script {
+                                codeQuality.sonarLocalScan()
+                            }
                         }
                     }
                 }

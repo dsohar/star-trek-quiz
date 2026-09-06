@@ -37,6 +37,10 @@ podTemplate(cloud: 'kubernetes', containers: [
                                 "${appimage}:${apptag}",
                                 "."
                             )
+                            dockerImageLatest = docker.build(
+                                "${appimage}:latest",
+                                "."
+                            )
                         }
                     }
                 },
@@ -57,6 +61,7 @@ podTemplate(cloud: 'kubernetes', containers: [
               script {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
                     dockerImage.push()
+                    dockerImageLatest.push()
                 }
               }
             }

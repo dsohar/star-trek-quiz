@@ -16,7 +16,7 @@ podTemplate(cloud: 'kubernetes', containers: [
         image: 'docker:26-dind', // Use the latest stable DinD image
         privileged: true,      // Essential for Docker daemon to run
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
-    )
+    ),
     sonarqubeTemplate(
         name: 'sonarqube'
         image: 'sonarqube:latest'
@@ -24,7 +24,7 @@ podTemplate(cloud: 'kubernetes', containers: [
     helmTemplate(
         name: 'helm'
         image: 'helm:latest'
-    )
+    ),
     ], 
   volumes: [
     emptyDirVolume(mountPath: '/var/lib/docker', memory: false) // Q: Why do we need this volume?

@@ -23,7 +23,7 @@ podTemplate(cloud: 'kubernetes', containers: [
     ),
     containerTemplate(
         name: 'helm',
-        image: 'alpine/helm:latest'
+        image: 'nginx:latest'
     )
     ], 
   volumes: [

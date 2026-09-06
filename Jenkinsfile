@@ -1,3 +1,5 @@
+@Library('my-shared-library') _
+
 def appname = "star-trek-quiz"
 def repo = "dsohar"  // Replace with your DockerHub username
 def appimage = "docker.io/${repo}/${appname}"
@@ -14,7 +16,16 @@ podTemplate(cloud: 'kubernetes', containers: [
         image: 'docker:26-dind', // Use the latest stable DinD image
         privileged: true,      // Essential for Docker daemon to run
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
-    )], 
+    )
+    sonarqubeTemplate(
+        name: 'sonarqube'
+        image: 'sonarqube:latest'
+    )
+    helmTemplate(
+        name: 'helm'
+        image: 'helm:latest'
+    )
+    ], 
   volumes: [
     emptyDirVolume(mountPath: '/var/lib/docker', memory: false) // Q: Why do we need this volume?
   ]) {
@@ -46,7 +57,7 @@ podTemplate(cloud: 'kubernetes', containers: [
                 },
 
                 'Scan Docker Image': {
-                    stage('Scan Docker Image') {
+                    stage('Scan Code') {
                         container('docker') {
                             echo "Scanning..."
                             //  sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL ${appimage}:${apptag}'
@@ -56,7 +67,7 @@ podTemplate(cloud: 'kubernetes', containers: [
             )
         }
 
-        stage('push') {
+        stage('Push to DockerHub') {
             container('docker') {
               script {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {

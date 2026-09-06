@@ -20,11 +20,11 @@ podTemplate(cloud: 'kubernetes', containers: [
     sonarqubeTemplate(
         name: 'sonarqube',
         image: 'sonarsource/sonar-scanner-cli:latest'
-    )
+    ),
     helmTemplate(
         name: 'helm',
         image: 'alpine/helm:latest'
-    ),
+    )
     ], 
   volumes: [
     emptyDirVolume(mountPath: '/var/lib/docker', memory: false) // Q: Why do we need this volume?

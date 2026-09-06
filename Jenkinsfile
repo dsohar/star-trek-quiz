@@ -18,12 +18,12 @@ podTemplate(cloud: 'kubernetes', containers: [
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
     ),
     sonarqubeTemplate(
-        name: 'sonarqube'
-        image: 'sonarqube:latest'
+        name: 'sonarqube',
+        image: 'sonarsource/sonar-scanner-cli:latest'
     )
     helmTemplate(
-        name: 'helm'
-        image: 'helm:latest'
+        name: 'helm',
+        image: 'alpine/helm:latest'
     ),
     ], 
   volumes: [

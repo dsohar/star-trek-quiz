@@ -2,7 +2,7 @@
 
 def APP_NAME = "star-trek-quiz"
 def REPO = "dsohar"  // Replace with your DockerHub username
-def APP_IMAGE = "docker.io/${REPO}/${appname}"
+def APP_IMAGE = "docker.io/${REPO}/${APP_NAME}"
 def APP_TAG = "2.2.${env.BUILD_NUMBER}"
 
 

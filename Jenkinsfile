@@ -22,13 +22,15 @@ podTemplate(cloud: 'kubernetes', containers: [
         image: 'sonarsource/sonar-scanner-cli:latest'
     ),
     containerTemplate(
-        name: 'helm',
-        image: 'nginx:latest'
-    )
-    ], 
-  volumes: [
+        name: 'deployer', 
+        image: 'elevy99927/k8s-deployer:latest', 
+        command: 'cat', 
+        ttyEnabled: true
+    ),
+], 
+volumes: [
     emptyDirVolume(mountPath: '/var/lib/docker', memory: false) // Q: Why do we need this volume?
-  ]) {
+    ]) {
     node(POD_LABEL) {
         stage('chackout') {
             container('jnlp') {

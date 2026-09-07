@@ -1,10 +1,10 @@
 @Library('my-shared-library') _
 
-def appname = "star-trek-quiz"
-def repo = "dsohar"  // Replace with your DockerHub username
-def appimage = "docker.io/${repo}/${appname}"
-def apptag = "2.2.${env.BUILD_NUMBER}"
-def dockerImage
+def APP_NAME = "star-trek-quiz"
+def REPO = "dsohar"  // Replace with your DockerHub username
+def APP_IMAGE = "docker.io/${REPO}/${appname}"
+def APP_TAG = "2.2.${env.BUILD_NUMBER}"
+
 
 podTemplate(cloud: 'kubernetes', containers: [
     containerTemplate(
@@ -47,11 +47,11 @@ volumes: [
                             echo "Building Docker image..."
 
                             dockerImage = docker.build(
-                                "${appimage}:${apptag}",
+                                "${APP_IMAGE}:${APP_TAG}",
                                 "."
                             )
                             dockerImageLatest = docker.build(
-                                "${appimage}:latest",
+                                "${APP_IMAGE}:latest",
                                 "."
                             )
                         }

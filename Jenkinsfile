@@ -23,7 +23,7 @@ podTemplate(cloud: 'kubernetes', containers: [
     ),
     containerTemplate(
         name: 'deployer', 
-        image: 'elevy99927/k8s-deployer:latest', 
+        image: 'dsohar/devops-toolbox:latest', 
         command: 'cat', 
         ttyEnabled: true
     ),

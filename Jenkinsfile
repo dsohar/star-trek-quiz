@@ -84,6 +84,7 @@ volumes: [
                                 sh "rm -f ${imageArchive}"
                             }
                         }
+                    }
                 }
             )
         }

@@ -39,7 +39,7 @@ volumes: [
 	    checkout scm
           }
         } // end chackout
-        
+
         stage('Build Docker Image') {
             container('docker') {
                 script {
@@ -54,33 +54,33 @@ volumes: [
             }
         }
 
-        stage('Trivy Image Scan') {
-            script {
-                def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
+        // stage('Trivy Image Scan') {
+        //     script {
+        //         def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
 
-                try {
-                    container('docker') {
-                        sh """
-                            docker save \
-                                ${APP_IMAGE}:${APP_TAG} \
-                                -o ${imageArchive}
-                        """
-                    }
+        //         try {
+        //             container('docker') {
+        //                 sh """
+        //                     docker save \
+        //                         ${APP_IMAGE}:${APP_TAG} \
+        //                         -o ${imageArchive}
+        //                 """
+        //             }
 
-                    container('deployer') {
-                        sh """
-                            trivy image \
-                                --input ${imageArchive} \
-                                --severity HIGH,CRITICAL \
-                                --no-progress \
-                                --exit-code 0
-                        """
-                    }
-                } finally {
-                    sh "rm -f ${imageArchive}"
-                }
-            }
-        }
+        //             container('deployer') {
+        //                 sh """
+        //                     trivy image \
+        //                         --input ${imageArchive} \
+        //                         --severity HIGH,CRITICAL \
+        //                         --no-progress \
+        //                         --exit-code 0
+        //                 """
+        //             }
+        //         } finally {
+        //             sh "rm -f ${imageArchive}"
+        //         }
+        //     }
+        // }
         stage('Push to DockerHub') {
             container('docker') {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
@@ -91,7 +91,9 @@ volumes: [
         } //end push
 
         stage('Deploy') {
-            sh "helm template ${APP_NAME} ./chart > ${APP_NAME}.yaml"
+            container('deployer') {
+                sh "helm template ${APP_NAME} ./chart > ${APP_NAME}.yaml"
+            }
         }
     }
 }

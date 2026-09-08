@@ -20,7 +20,7 @@ podTemplate(cloud: 'kubernetes', containers: [
     ),
     containerTemplate(
         name: 'sonarqube',
-        image: 'sonarsource/sonar-scanner-cli:latest'
+        image: 'sonarsource:latest'
     ),
     containerTemplate(
         name: 'deployer', 
@@ -59,7 +59,7 @@ volumes: [
                         container('sonarqube') {
                             echo "Scanning..."
                             script {
-                                codeQuality.sonarCreateProject(env.APP_NAME)
+                                codeQuality.sonarCreateProject(APP_NAME)
                             }
                             script {
                                 codeQuality.sonarLocalScan()
@@ -80,7 +80,7 @@ volumes: [
         } //end push
 
         stage('Deploy') {
-            sh "echo helm template hello-newapp ./chart > hello-newapp.yaml"
+            sh "helm template ${APP_NAME} ./chart > ${APP_NAME}.yaml"
         }
     }
 }

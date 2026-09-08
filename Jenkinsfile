@@ -92,7 +92,7 @@ volumes: [
 
         stage('Deploy') {
             container('deployer') {
-                sh "helm template ${APP_NAME} ./chart > ${APP_NAME}.yaml"
+                sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}.yaml"
             }
         }
     }

@@ -18,11 +18,10 @@ podTemplate(cloud: 'kubernetes', containers: [
         privileged: true,      // Essential for Docker daemon to run
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
     ),
-    containerTemplate(
-        name: 'sonarqube',
-        image: 'sonarqube:latest',
-        ports: '9000:9000'
-    ),
+    // containerTemplate(
+    //     name: 'sonarqube',
+    //     image: 'sonarqube:latest'
+    // ),
     containerTemplate(
         name: 'deployer', 
         image: 'dsohar/devops-toolbox:latest', 
@@ -31,8 +30,7 @@ podTemplate(cloud: 'kubernetes', containers: [
     ),
 ], 
 volumes: [
-    emptyDirVolume(mountPath: '/var/lib/docker', memory: false),
-    emptyDirVolume(mountPath: '/opt/sonarqube/', memory: false)
+    emptyDirVolume(mountPath: '/var/lib/docker', memory: false)
     ]) {
     node(POD_LABEL) {
         stage('chackout') {
@@ -83,16 +81,18 @@ volumes: [
                 }
             }
         }
-        stage('SonarCube Scan') {
-            container('sonarcube') {
-                script {
-                    codeQuality.sonarCreateProject(APP_NAME)
-                }
-                script {
-                    codeQuality.sonarLocalScan()
-                }
-            }
-        }
+        // stage('SonarCube Scan') {
+        //     container('deployer') {
+        //         script {
+        //             codeQuality.sonarCreateProject(APP_NAME)
+        //         }
+        //     }
+        //     container('jnlp') {
+        //         script {
+        //             codeQuality.sonarLocalScan()
+        //         }
+        //     }
+        // }
         stage('Push to DockerHub') {
             container('docker') {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
@@ -102,9 +102,22 @@ volumes: [
             }
         } //end push
 
-        stage('Deploy') {
+        stage('Deploy with HELM') {
             container('deployer') {
-                sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}.yaml"
+                sh """
+                    helm lint ./helmchart
+
+                    helm upgrade --install ${APP_NAME} ./helmchart \
+                        --namespace default \
+                        --set image.repository=${REPO} \
+                        --set image.tag=${APP_TAG} \
+                        --wait \
+                        --timeout 5m
+
+                    kubectl get deployments
+                    kubectl get pods
+                    kubectl get services
+                """
             }
         }
     }

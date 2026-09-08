@@ -18,10 +18,10 @@ podTemplate(cloud: 'kubernetes', containers: [
         privileged: true,      // Essential for Docker daemon to run
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
     ),
-    containerTemplate(
-        name: 'sonarqube',
-        image: 'sonarsource:latest'
-    ),
+    // containerTemplate(
+    //     name: 'sonarqube',
+    //     image: 'sonarqube:latest'
+    // ),
     containerTemplate(
         name: 'deployer', 
         image: 'dsohar/devops-toolbox:latest', 
@@ -54,18 +54,36 @@ volumes: [
                         }
                     }
                 },
-                'Scan Docker Image': {
-                    stage('Scan Code') {
-                        container('sonarqube') {
-                            echo "Scanning..."
-                            script {
-                                codeQuality.sonarCreateProject(APP_NAME)
-                            }
-                            script {
-                                codeQuality.sonarLocalScan()
+                'Trivy Scan': {
+                    stage('Trivy Image Scan') {
+                        script {
+                            def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
+
+                            try {
+                                // The image exists inside the DinD Docker daemon.
+                                container('docker') {
+                                    sh """
+                                        docker save \
+                                            ${APP_IMAGE}:${APP_TAG} \
+                                            -o ${imageArchive}
+                                    """
+                                }
+
+                                // All containers in the Jenkins pod share the workspace,
+                                // so the deployer container can read the archive.
+                                container('deployer') {
+                                    sh """
+                                        trivy image \
+                                            --input ${imageArchive} \
+                                            --severity HIGH,CRITICAL \
+                                            --no-progress \
+                                            --exit-code 0
+                                    """
+                                }
+                            } finally {
+                                sh "rm -f ${imageArchive}"
                             }
                         }
-                    }
                 }
             )
         }

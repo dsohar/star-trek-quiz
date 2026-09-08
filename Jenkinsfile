@@ -4,6 +4,7 @@ def APP_NAME = "star-trek-quiz"
 def REPO = "dsohar"  // Replace with your DockerHub username
 def APP_IMAGE = "docker.io/${REPO}/${APP_NAME}"
 def APP_TAG = "2.2.${env.BUILD_NUMBER}"
+def dockerImage
 
 
 podTemplate(cloud: 'kubernetes', containers: [
@@ -50,14 +51,9 @@ volumes: [
                                 "${APP_IMAGE}:${APP_TAG}",
                                 "."
                             )
-                            dockerImageLatest = docker.build(
-                                "${APP_IMAGE}:latest",
-                                "."
-                            )
                         }
                     }
                 },
-
                 'Scan Docker Image': {
                     stage('Scan Code') {
                         container('sonarqube') {
@@ -76,12 +72,10 @@ volumes: [
 
         stage('Push to DockerHub') {
             container('docker') {
-              script {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
                     dockerImage.push()
-                    dockerImageLatest.push()
+                    dockerImage.push('latest')
                 }
-              }
             }
         } //end push
 

@@ -20,7 +20,8 @@ podTemplate(cloud: 'kubernetes', containers: [
     ),
     containerTemplate(
         name: 'sonarqube',
-        image: 'sonarqube:latest'
+        image: 'sonarqube:latest',
+        ports: '9000:9000'
     ),
     containerTemplate(
         name: 'deployer', 
@@ -30,7 +31,8 @@ podTemplate(cloud: 'kubernetes', containers: [
     ),
 ], 
 volumes: [
-    emptyDirVolume(mountPath: '/var/lib/docker', memory: false) // Q: Why do we need this volume?
+    emptyDirVolume(mountPath: '/var/lib/docker', memory: false),
+    emptyDirVolume(mountPath: '/opt/sonarqube/', memory: false)
     ]) {
     node(POD_LABEL) {
         stage('chackout') {

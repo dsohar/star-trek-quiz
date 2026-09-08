@@ -39,56 +39,48 @@ volumes: [
 	    checkout scm
           }
         } // end chackout
+        
+        stage('Build Docker Image') {
+            container('docker') {
+                script {
+                    dockerImage = docker.build(
+                        "${APP_IMAGE}:${APP_TAG}",
+                        "."
+                    )
 
-        stage('Building and Scanning in Parallel') {
-            parallel(
-                'Build Docker Image': {
-                    stage('Build Docker Image') {
-                        container('docker') {
-                            echo "Building Docker image..."
-
-                            dockerImage = docker.build(
-                                "${APP_IMAGE}:${APP_TAG}",
-                                "."
-                            )
-                        }
-                    }
-                },
-                'Trivy Scan': {
-                    stage('Trivy Image Scan') {
-                        script {
-                            def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
-
-                            try {
-                                // The image exists inside the DinD Docker daemon.
-                                container('docker') {
-                                    sh """
-                                        docker save \
-                                            ${APP_IMAGE}:${APP_TAG} \
-                                            -o ${imageArchive}
-                                    """
-                                }
-
-                                // All containers in the Jenkins pod share the workspace,
-                                // so the deployer container can read the archive.
-                                container('deployer') {
-                                    sh """
-                                        trivy image \
-                                            --input ${imageArchive} \
-                                            --severity HIGH,CRITICAL \
-                                            --no-progress \
-                                            --exit-code 0
-                                    """
-                                }
-                            } finally {
-                                sh "rm -f ${imageArchive}"
-                            }
-                        }
-                    }
+                    // Confirm that the image now exists
+                    sh "docker image inspect ${APP_IMAGE}:${APP_TAG}"
                 }
-            )
+            }
         }
 
+        stage('Trivy Image Scan') {
+            script {
+                def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
+
+                try {
+                    container('docker') {
+                        sh """
+                            docker save \
+                                ${APP_IMAGE}:${APP_TAG} \
+                                -o ${imageArchive}
+                        """
+                    }
+
+                    container('deployer') {
+                        sh """
+                            trivy image \
+                                --input ${imageArchive} \
+                                --severity HIGH,CRITICAL \
+                                --no-progress \
+                                --exit-code 0
+                        """
+                    }
+                } finally {
+                    sh "rm -f ${imageArchive}"
+                }
+            }
+        }
         stage('Push to DockerHub') {
             container('docker') {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {

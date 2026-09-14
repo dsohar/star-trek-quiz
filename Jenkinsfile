@@ -7,7 +7,7 @@ def APP_TAG = "2.2.${env.BUILD_NUMBER}"
 def dockerImage
 
 
-podTemplate(cloud: 'kubernetes', serviceAccount: 'jenkins-deployer', containers: [
+podTemplate(cloud: 'kubernetes', containers: [
     containerTemplate(
         name: 'jnlp', 
         image: 'jenkins/inbound-agent:latest'
@@ -102,23 +102,9 @@ volumes: [
             }
         } //end push
 
-        stage('Deploy with HELM') {
-            container('deployer') {
-                sh """
-                    helm lint ./helmchart
-
-                    helm upgrade --install ${APP_NAME} ./helmchart \
-                        --namespace default \
-                        --set image.repository=${APP_IMAGE} \
-                        --set image.tag=${APP_TAG} \
-                        --wait \
-                        --timeout 5m
-
-                    kubectl get deployments
-                    kubectl get pods
-                    kubectl get services
-                """
-            }
+        stage('Create HELM Template') {
+            sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}.yaml"
+            // sh "cat ${APP_NAME}.yaml"
         }
     }
 }

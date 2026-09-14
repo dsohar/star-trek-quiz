@@ -103,8 +103,10 @@ volumes: [
         } //end push
 
         stage('Create HELM Template') {
-            sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}.yaml"
-            // sh "cat ${APP_NAME}.yaml"
+            container('deployer') {
+                sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}.yaml"
+                sh "cat ${APP_NAME}.yaml"
+            }
         }
     }
 }

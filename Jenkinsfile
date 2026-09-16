@@ -18,10 +18,13 @@ podTemplate(cloud: 'kubernetes', containers: [
         privileged: true,      // Essential for Docker daemon to run
         args: '--storage-driver=vfs' // VFS is safest for K8s, though slower
     ),
-    // containerTemplate(
-    //     name: 'sonarqube',
-    //     image: 'sonarqube:latest'
-    // ),
+    containerTemplate(
+        name: 'sonarqube',
+        image: 'sonarqube:latest',
+        ports: [
+            portMapping(name: 'sonarqube', containerPort: 9000)
+        ]
+    )
     containerTemplate(
         name: 'deployer', 
         image: 'dsohar/devops-toolbox:latest', 

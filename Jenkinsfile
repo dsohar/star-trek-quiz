@@ -123,6 +123,7 @@ volumes: [
                         pwd
 
                         ls -la
+                        ls -la GitOps
 
                         cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml
 

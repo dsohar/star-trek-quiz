@@ -122,10 +122,10 @@ volumes: [
                     sh '''
                         cd GitOps
 
-                        git config user.name "Jenkins"
-                        git config user.email "jenkins@local"
+                        git config --global user.name "Jenkins"
+                        git config --global user.email "jenkins@local"
                         git config --global --add safe.directory /home/jenkins/agent/workspace/star-trek-quiz
-
+                        // git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/kfirbros123/argo-gitops.git HEAD:application
                         git add star-trek-quiz-template.yaml
                     '''
                     

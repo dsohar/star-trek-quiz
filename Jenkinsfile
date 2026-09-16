@@ -117,26 +117,21 @@ volumes: [
                         passwordVariable: 'GIT_TOKEN'
                     )
                 ]) {
+                    "sh git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps"
+                    "sh cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml"
                     sh '''
-                        git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps
-
-                        pwd
-
-                        ls -la
-                        ls -la GitOps
-
-                        cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml
-
                         cd GitOps
 
                         git config user.name "Jenkins"
                         git config user.email "jenkins@local"
 
                         git add star-trek-quiz-template.yaml
-                        git commit -m "Update ${APP_NAME} template"
-
-                        git push origin main
                     '''
+                    
+                    "sh    git commit -m 'Update ${APP_NAME} template'"
+
+                    "sh git push origin main"
+                    
                 }
             }
         }

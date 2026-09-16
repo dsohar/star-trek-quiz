@@ -117,24 +117,28 @@ volumes: [
                         passwordVariable: 'GIT_TOKEN'
                     )
                 ]) {
-                    sh "git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps"
-                    sh "cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml"
-                    sh '''
+                    sh """
+                    
+                        git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps
+                        cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml
+
                         cd GitOps
 
                         git config --global user.name "Jenkins"
                         git config --global user.email "jenkins@local"
                         git config --global --add safe.directory /home/jenkins/agent/workspace/star-trek-quiz
-                        // git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/kfirbros123/argo-gitops.git HEAD:application
+                        
                         git add star-trek-quiz-template.yaml
-                    '''
                     
-                    sh "git commit -m 'Update ${APP_NAME} template'"
+                        git commit -m 'Update ${APP_NAME} template'
 
-                    sh "git push origin main"
+                        git push origin main
+                    """
                     
-                } // use """ to get APP_NAME
+                } 
             }
         }
     }
 }
+
+// git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/kfirbros123/argo-gitops.git HEAD:application

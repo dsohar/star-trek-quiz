@@ -117,8 +117,8 @@ volumes: [
                         passwordVariable: 'GIT_TOKEN'
                     )
                 ]) {
-                    "sh git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps"
-                    "sh cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml"
+                    sh "git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps"
+                    sh "cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml"
                     sh '''
                         cd GitOps
 
@@ -128,9 +128,9 @@ volumes: [
                         git add star-trek-quiz-template.yaml
                     '''
                     
-                    "sh    git commit -m 'Update ${APP_NAME} template'"
+                    sh "git commit -m 'Update ${APP_NAME} template'"
 
-                    "sh git push origin main"
+                    sh "git push origin main"
                     
                 }
             }

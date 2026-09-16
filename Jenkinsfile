@@ -24,7 +24,7 @@ podTemplate(cloud: 'kubernetes', containers: [
         ports: [
             portMapping(name: 'sonarqube', containerPort: 9000)
         ]
-    )
+    ),
     containerTemplate(
         name: 'deployer', 
         image: 'dsohar/devops-toolbox:latest', 

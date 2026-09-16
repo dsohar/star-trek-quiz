@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: dsohar/star-trek-quiz
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   tag: "latest"
 
 app:

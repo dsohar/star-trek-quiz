@@ -104,8 +104,35 @@ volumes: [
 
         stage('Create HELM Template') {
             container('deployer') {
-                sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}.yaml"
-                sh "cat ${APP_NAME}.yaml"
+                sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}-template.yaml"
+            }
+        } // end HELM Teamplate
+
+        stage('Push Template to GitOps') {
+            container('deployer') {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'github-cred',
+                        usernameVariable: 'GIT_USERNAME',
+                        passwordVariable: 'GIT_TOKEN'
+                    )
+                ]) {
+                    sh '''
+                        git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git gitops
+
+                        cp ${APP_NAME}-template.yaml gitops/star-trek-quiz-template.yaml
+
+                        cd gitops
+
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@local"
+
+                        git add star-trek-quiz-template.yaml
+                        git commit -m "Update ${APP_NAME} template"
+
+                        git push origin main
+                    '''
+                }
             }
         }
     }

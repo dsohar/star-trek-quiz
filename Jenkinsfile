@@ -118,7 +118,11 @@ volumes: [
                     )
                 ]) {
                     sh '''
-                        git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git gitops
+                        git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git GitOps
+
+                        pwd
+
+                        ls -la
 
                         cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml
 

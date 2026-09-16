@@ -120,9 +120,9 @@ volumes: [
                     sh '''
                         git clone https://${GIT_USERNAME}:${GIT_TOKEN}@github.com/dsohar/GitOps.git gitops
 
-                        cp ${APP_NAME}-template.yaml gitops/star-trek-quiz-template.yaml
+                        cp ${APP_NAME}-template.yaml GitOps/star-trek-quiz-template.yaml
 
-                        cd gitops
+                        cd GitOps
 
                         git config user.name "Jenkins"
                         git config user.email "jenkins@local"

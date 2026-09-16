@@ -124,6 +124,7 @@ volumes: [
 
                         git config user.name "Jenkins"
                         git config user.email "jenkins@local"
+                        git config --global --add safe.directory /home/jenkins/agent/workspace/star-trek-quiz
 
                         git add star-trek-quiz-template.yaml
                     '''
@@ -132,7 +133,7 @@ volumes: [
 
                     sh "git push origin main"
                     
-                }
+                } // use """ to get APP_NAME
             }
         }
     }

@@ -129,10 +129,13 @@ volumes: [
                         git config --global --add safe.directory /home/jenkins/agent/workspace/star-trek-quiz
                         
                         git add star-trek-quiz-template.yaml
-                    
-                        git commit -m 'Update ${APP_NAME} template'
 
-                        git push origin main
+                        if git diff --cached --quiet; then
+                            echo "No changes to commit"
+                        else
+                            git commit -m 'Update ${APP_NAME} template'
+                            git push origin main
+                        fi
                     """
                     
                 } 

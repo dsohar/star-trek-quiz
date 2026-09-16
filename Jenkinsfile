@@ -54,18 +54,18 @@ volumes: [
             }
         }
 
-        // stage('Trivy Image Scan') {
-        //     script {
-        //         def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
+        stage('Trivy Image Scan') {
+            script {
+                def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
 
-        //         try {
-        //             container('docker') {
-        //                 sh """
-        //                     docker save \
-        //                         ${APP_IMAGE}:${APP_TAG} \
-        //                         -o ${imageArchive}
-        //                 """
-        //             }
+                try {
+                    container('docker') {
+                        sh """
+                            docker save \
+                                ${APP_IMAGE}:${APP_TAG} \
+                                -o ${imageArchive}
+                        """
+                    }
 
                     container('deployer') {
                         sh """

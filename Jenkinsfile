@@ -36,12 +36,17 @@ volumes: [
     emptyDirVolume(mountPath: '/var/lib/docker', memory: false)
     ]) {
     node(POD_LABEL) {
-        stage('chackout') {
+        // stage('chackout') {
+        //     container('jnlp') {
+        //     sh '/usr/bin/git config --global http.sslVerify false'
+	    // checkout scm
+        //   }
+        // } // end chackout
+        stage('checkout') {
             container('jnlp') {
-            sh '/usr/bin/git config --global http.sslVerify false'
-	    checkout scm
-          }
-        } // end chackout
+                checkout scm
+            }
+        } // end checkout
 
         stage('Build Docker Image') {
             container('docker') {

@@ -107,7 +107,7 @@ volumes: [
 
         stage('Create HELM Template') {
             container('deployer') {
-                sh "helm template ${APP_NAME} ./helmchart > ${APP_NAME}-template.yaml"
+                sh "helm template ${APP_NAME} ./helmchart --set-string image.tag=${APP_TAG} > ${APP_NAME}-template.yaml"
             }
         } // end HELM Teamplate
 

@@ -82,9 +82,6 @@ spec:
             - weight: 100
               podAffinityTerm:
                 labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - star-trek-quiz
+                  matchLabels:
+                    {{- include "star-trek-quiz.selectorLabels" . | nindent 20 }}
                 topologyKey: kubernetes.io/hostname

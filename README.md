@@ -205,7 +205,7 @@ helm rollback enterprise <revision>
 
 ## Jenkins CI and GitOps Deployment
 
-The supplied `Jenkinsfile` uses a Jenkins shared library and a Kubernetes-based agent. It checks out the application, builds a Docker image tagged `2.2.<BUILD_NUMBER>`, scans the image with Trivy for HIGH and CRITICAL vulnerabilities, and pushes both the versioned tag and `latest` to Docker Hub. Trivy uses exit code 0, so reported vulnerabilities do not fail the pipeline. The SonarQube scan in the supplied pipeline is commented out.
+The supplied `Jenkinsfile` uses a Jenkins shared library and a Kubernetes-based agent. It checks out the application, builds a Docker image tagged `2.2.<BUILD_NUMBER>`, scans the image with Trivy for HIGH and CRITICAL vulnerabilities, and pushes both the versioned tag and `latest` to Docker Hub. Trivy uses exit code 0, so reported vulnerabilities do not fail the pipeline. The Trivy and SonarQube stages run in parallel. The SonarQube stage currently only prints a message; its scan commands remain commented out.
 
 Jenkins then renders `./helmchart` with `helm template` and commits the generated `star-trek-quiz-template.yaml` to the [GitOps repository](https://github.com/dsohar/GitOps) when it changes. The pipeline passes the build-numbered image tag to Helm, so the generated manifest specifies that build. After Jenkins commits the updated manifest, manually sync the Argo CD application and verify the deployment.
 

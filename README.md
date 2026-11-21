@@ -2,6 +2,7 @@
 
 * 🐳 **Docker Hub:** https://hub.docker.com/r/dsohar/star-trek-quiz
 * 💻 **GitHub Repository:** https://github.com/dsohar/star-trek-quiz
+* 🚀 **GitOps Repository:** https://github.com/dsohar/GitOps
 
 ## Overview
 
@@ -21,7 +22,7 @@ After each answer, the player is shown whether the answer was correct and their 
 
 The leaderboard displays the top 10 scores.
 
-> **Note:** The leaderboard is currently stored inside the container. Scores created while running the Docker image are therefore lost when the container is removed. Persistent storage will be added at a later stage.
+> **Note:** The leaderboard is a JSON file inside each container. Kubernetes Pods do not share scores, and scores can be lost when a container is replaced or removed. Shared persistent storage or a database is a possible future improvement.
 
 ---
 
@@ -34,6 +35,9 @@ The leaderboard displays the top 10 scores.
 * Docker
 * Kubernetes
 * Helm
+* Jenkins
+* Trivy
+* Argo CD
 
 ---
 
@@ -69,6 +73,7 @@ star-trek-quiz/
 ├── leaderboard.json
 ├── requirements.txt
 ├── Dockerfile
+├── Jenkinsfile
 ├── .dockerignore
 ├── .gitignore
 └── README.md
@@ -88,7 +93,7 @@ star-trek-quiz/
 | `templates/leaderboard.html`          | Displays the top leaderboard scores.                             |
 | `static/favicon.ico`                  | Browser tab icon for the application.                            |
 | `Dockerfile`                          | Defines how to build the Docker image.                           |
-| `Jenkinsfile`                         | Defines a Jenkins pipeline that builds a Docker.                 |
+| `Jenkinsfile`                         | Defines the Jenkins CI and GitOps publishing pipeline.                 |
 | `requirements.txt`                    | Lists the Python dependencies.                                   |
 | `.dockerignore`                       | Excludes unnecessary files from the Docker image.                |
 | `.gitignore`                          | Excludes unnecessary local files from Git.                       |
@@ -125,10 +130,10 @@ If the image is not already available locally, Docker will automatically pull it
 
 ### Running a Specific Version
 
-To run a specific version, replace the tag with the required version. For example:
+To run a specific version, choose an existing tag from the Docker Hub repository and replace `<IMAGE_TAG>`:
 
 ```bash
-docker run --rm -p 5001:5001 dsohar/star-trek-quiz:2.1.0
+docker run --rm -p 5001:5001 dsohar/star-trek-quiz:<IMAGE_TAG>
 ```
 
 ### Docker Image
@@ -137,7 +142,7 @@ Docker Hub repository:
 
 `dsohar/star-trek-quiz`
 
-The `latest` tag points to the current version.
+Jenkins publishes a build-numbered image and also updates `latest`. Tags can be deleted or changed; check Docker Hub for available tags. Pin a versioned tag when you need a specific build.
 
 ---
 
@@ -155,7 +160,7 @@ The deployment includes:
 * CPU and memory resource requests and limits
 * Pod anti-affinity to prefer distributing replicas across different Kubernetes nodes.
 
-The Docker image can be pulled using the `latest` tag.
+The chart defaults to the `latest` image tag. This section describes a **direct Helm release**; it is separate from the Argo CD GitOps workflow below. Do not manage the same Kubernetes resources through both methods.
 
 ### Install the Application
 
@@ -172,16 +177,16 @@ kubectl get service
 kubectl get ingress
 ```
 
-Then open your browser and navigate to:
+The chart constructs the host from `ingress.ip` (default `192.168.49.2`) and routes `/`. Set `--set ingress.ip=<INGRESS-IP>` on install or upgrade if needed, and ensure the NGINX ingress controller and DNS routing are available. Then open:
 
 ```text
-http://<INGRESS-ADDRESS>/star-trek-quiz
+http://star-trek-quiz.<INGRESS-IP>.nip.io/
 ```
 
 
 ### Upgrade the Application
 
-After a new Docker image has been built and pushed to Docker Hub:
+To update a direct Helm release, run the following from the repository. To deploy a particular image, add `--set-string image.tag=<IMAGE_TAG>`. Reusing `latest` alone does not guarantee a rollout when the manifest is unchanged:
 
 ```bash
 helm upgrade enterprise ./helmchart \
@@ -195,6 +200,29 @@ To roll back to a previous Helm revision:
 ```bash
 helm rollback enterprise <revision>
 ```
+
+---
+
+## Jenkins CI and GitOps Deployment
+
+The supplied `Jenkinsfile` uses a Jenkins shared library and a Kubernetes-based agent. It checks out the application, builds a Docker image tagged `2.2.<BUILD_NUMBER>`, scans the image with Trivy for HIGH and CRITICAL vulnerabilities, and pushes both the versioned tag and `latest` to Docker Hub. Trivy uses exit code 0, so reported vulnerabilities do not fail the pipeline. The SonarQube scan in the supplied pipeline is commented out.
+
+Jenkins then renders `./helmchart` with `helm template` and commits the generated `star-trek-quiz-template.yaml` to the [GitOps repository](https://github.com/dsohar/GitOps) when it changes. The supplied pipeline renders with the chart defaults: it does **not** set the generated manifest to the new build-numbered tag. The supplied GitOps manifest references `latest`, so a newly pushed image alone may not change the manifest or trigger a rollout. To deploy a specific build, update the desired image tag in the GitOps manifest and commit that change, then sync and verify the deployment.
+
+### Manual Argo CD sync
+
+1. Confirm that the desired manifest and image tag are committed to the GitOps repository's `main` branch. The supplied Argo CD Application points to the repository root and the `default` namespace.
+2. In the Argo CD UI, refresh the `star-trek-quiz` application and review the differences.
+3. Select **Sync**, confirm the operation, and check that the application and its resources become healthy. Verify the running image and tag in the Deployment or Pods.
+
+A sync applies the desired manifest; it does not make a mutable `latest` tag identify a particular build. Direct `helm install`, `helm upgrade`, and `helm rollback` operate on a Helm release and are not the GitOps deployment or rollback procedure. For GitOps rollback, restore the desired manifest in Git and manually sync it in Argo CD.
+
+### Course project limitations
+
+* **Leaderboard:** Each Pod writes its own local JSON file; scores are neither shared nor durable across container replacement.
+* **Flask secret:** The chart's `replace-me` value is a demo placeholder. The generated GitOps manifest includes it as Kubernetes Secret `stringData`; use an appropriate secret-management approach for a real deployment and do not commit real keys.
+* **Trivy:** The scan reports HIGH and CRITICAL findings but does not fail the pipeline on vulnerabilities.
+* **Ingress:** The host pattern and default IP are specific to the exercise. The IP is configurable in Helm values, but the hostname pattern is hardcoded in the template and must suit the cluster's routing.
 
 ---
 

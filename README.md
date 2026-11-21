@@ -207,7 +207,7 @@ helm rollback enterprise <revision>
 
 The supplied `Jenkinsfile` uses a Jenkins shared library and a Kubernetes-based agent. It checks out the application, builds a Docker image tagged `2.2.<BUILD_NUMBER>`, scans the image with Trivy for HIGH and CRITICAL vulnerabilities, and pushes both the versioned tag and `latest` to Docker Hub. Trivy uses exit code 0, so reported vulnerabilities do not fail the pipeline. The SonarQube scan in the supplied pipeline is commented out.
 
-Jenkins then renders `./helmchart` with `helm template` and commits the generated `star-trek-quiz-template.yaml` to the [GitOps repository](https://github.com/dsohar/GitOps) when it changes. The supplied pipeline renders with the chart defaults: it does **not** set the generated manifest to the new build-numbered tag. The supplied GitOps manifest references `latest`, so a newly pushed image alone may not change the manifest or trigger a rollout. To deploy a specific build, update the desired image tag in the GitOps manifest and commit that change, then sync and verify the deployment.
+Jenkins then renders `./helmchart` with `helm template` and commits the generated `star-trek-quiz-template.yaml` to the [GitOps repository](https://github.com/dsohar/GitOps) when it changes. The pipeline passes the build-numbered image tag to Helm, so the generated manifest specifies that build. After Jenkins commits the updated manifest, manually sync the Argo CD application and verify the deployment.
 
 ### Manual Argo CD sync
 

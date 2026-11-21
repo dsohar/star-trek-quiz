@@ -62,45 +62,54 @@ volumes: [
             }
         }
 
-        stage('Trivy Image Scan') {
-            script {
-                def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
+        stage('Security Scans') {
+            parallel(
+                'Trivy Image Scan': {
+                    stage('Trivy Image Scan') {
+                        script {
+                            def imageArchive = "${APP_NAME}-${env.BUILD_NUMBER}.tar"
 
-                try {
-                    container('docker') {
-                        sh """
-                            docker save \
-                                ${APP_IMAGE}:${APP_TAG} \
-                                -o ${imageArchive}
-                        """
-                    }
+                            try {
+                                container('docker') {
+                                    sh """
+                                        docker save \
+                                            ${APP_IMAGE}:${APP_TAG} \
+                                            -o ${imageArchive}
+                                    """
+                                }
 
-                    container('deployer') {
-                        sh """
-                            trivy image \
-                                --input ${imageArchive} \
-                                --severity HIGH,CRITICAL \
-                                --no-progress \
-                                --exit-code 0
-                        """
+                                container('deployer') {
+                                    sh """
+                                        trivy image \
+                                            --input ${imageArchive} \
+                                            --severity HIGH,CRITICAL \
+                                            --no-progress \
+                                            --exit-code 0
+                                    """
+                                }
+                            } finally {
+                                sh "rm -f ${imageArchive}"
+                            }
+                        }
                     }
-                } finally {
-                    sh "rm -f ${imageArchive}"
+                },
+                'SonarQube Scan': {
+                    stage('SonarQube Scan') {
+                        echo 'Running SonarQube Scan...'
+                        // container('deployer') {
+                        //     script {
+                        //         codeQuality.sonarCreateProject(APP_NAME)
+                        //     }
+                        // }
+                        // container('jnlp') {
+                        //     script {
+                        //         codeQuality.sonarLocalScan()
+                        //     }
+                        // }
+                    }
                 }
-            }
+            )
         }
-        // stage('SonarCube Scan') {
-        //     container('deployer') {
-        //         script {
-        //             codeQuality.sonarCreateProject(APP_NAME)
-        //         }
-        //     }
-        //     container('jnlp') {
-        //         script {
-        //             codeQuality.sonarLocalScan()
-        //         }
-        //     }
-        // }
         stage('Push to DockerHub') {
             container('docker') {
                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
@@ -151,5 +160,3 @@ volumes: [
         }
     }
 }
-
-// git push https://x-access-token:${{ secrets.GIT_TOKEN }}@github.com/kfirbros123/argo-gitops.git HEAD:application
